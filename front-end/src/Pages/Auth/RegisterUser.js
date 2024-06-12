@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { baseUrl, REGISTER } from "../../Api/Api";
 import { useNavigate } from "react-router-dom";
+import { baseUrl, REGISTER } from "../../Api/Api";
+import LoadingSubmit from "../../components/Loading/Loading";
+import "./Auth.css";
+// import Loading from "../../components/Loading/Loading";
 
 export default function Register() {
+
+  const [loading, Setloading] = useState(false);
+  const [errorRegister, seterrorRegister] = useState("");
   const [form, setForm] = useState({
     email: "",
     username: "",
@@ -29,39 +35,47 @@ export default function Register() {
 
   async function submithandle(e) {
     e.preventDefault();
-
-    // Setloading(true);
-    // seterrorRegister("");
+    Setloading(true);
+    seterrorRegister("");
 
     try {
-      var result = await axios.post(`${baseUrl}/${REGISTER}`, form);
+      const result = await axios.post(`${baseUrl}/${REGISTER}`, form);
       if (result.status === 200) {
-        // Setloading(false);
+        Setloading(false);
 
         navigate("/home/loginUser", { replace: true });//?
       }
     } catch (error) {
       console.log(error);
-      // seterrorRegister(error.response.data.errors);
-      // Setloading(false);
+      seterrorRegister(error.response.data.errors);
+      Setloading(false);
 
       // if (error.response.status === 400) {
       // }
     }
   }
+
+  const focus = useRef();
+
+  useEffect(() => {
+    focus.current.focus();
+  }, []);
+
   return (
     <>
+      {loading && <LoadingSubmit />}
+
       <div className="container mt-5 mb-5">
         <h2>Profile Registration</h2>
-        {/* {errorRegister && (
+        {errorRegister && (
           <div className="errorregister">
             {Object.keys(errorRegister).map((key) =>
               errorRegister[key].map((error, index) => (
-                <span key={`${key}-${index}`}>{error}</span> // Use a combined key to ensure uniqueness
+                <span key={`${key}-${index}`}>{error}</span>
               ))
             )}
           </div>
-        )} */}
+        )}
 
         <div className="form-container">
           <form className="needs-validation" onSubmit={submithandle}>
@@ -77,7 +91,7 @@ export default function Register() {
                     onChange={changhandle}
                     className="form-control"
                     required
-                    // ref={focus}
+                    ref={focus}
                   />
                 </div>
                 <div className="form-group">
