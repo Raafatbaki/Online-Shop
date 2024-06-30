@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\UsersContoller;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,11 +21,22 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 });*/
 
+Route::post('admin/login', [AuthController::class, 'loginAdmin']);
 Route::post('user/register', [AuthController::class, 'register']);
 Route::post('user/login', [AuthController::class, 'loginUser']);
 
-// Protected Routes for User
+// Protected Routes for Admin
+Route::middleware('auth:admin')->group(function () {
+    Route::post('/logoutAdmin', [AuthController::class, 'logoutAdmin']);
+    Route::get('/users', [UsersContoller::class, 'GetUsers']);
+    Route::post('/authAdmin', [UsersContoller::class, 'AuthAdmin']);
+    Route::delete('/user/delete/{id}', [UsersContoller::class, 'destroy']);
+    Route::get('/userProfile/{id}', [ProfileController::class, 'getProfileById']);
+    Route::put('/profile/edit/{id}',[ProfileController::class,"updateProfileById"]);
 
+});
+
+// Protected Routes for User
 Route::middleware('auth:user')->group(function () {
 
     Route::post('/logoutUser', [AuthController::class, 'logoutUser']);

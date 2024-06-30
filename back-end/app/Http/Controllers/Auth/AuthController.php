@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
 
-/*    public function loginAdmin(Request $request)
+    public function loginAdmin(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
@@ -36,7 +36,7 @@ class AuthController extends Controller
         } else {
             return response()->json(['message' => 'The password is not correct.'], 401);
         }
-    }*/
+    }
 
     public function loginUser(Request $request)
     {
@@ -104,14 +104,14 @@ class AuthController extends Controller
         }
     }
 
-/*    public function logoutAdmin(Request $request)
+    public function logoutAdmin(Request $request)
     {
         $admin = Auth::guard('admin')->user();
 
         $request->user('admin')->currentAccessToken()->delete();
 
         return response()->json(['message' => 'Successfully logged out'], 200);
-    }*/
+    }
 
     public function logoutUser(Request $request)
     {
