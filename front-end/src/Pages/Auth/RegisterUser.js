@@ -26,7 +26,7 @@ export default function Register() {
     phone: "",
   });
 
-  const navigate = useNavigate();// ?
+  const navigate = useNavigate();
 
   function changhandle(e) {
     setForm({ ...form, [e.target.name]: e.target.value });//?
@@ -43,7 +43,7 @@ export default function Register() {
       if (result.status === 200) {
         Setloading(false);
 
-        navigate("/home/loginUser", { replace: true });//?
+        navigate("/home/loginUser", { replace: true });
       }
     } catch (error) {
       console.log(error);

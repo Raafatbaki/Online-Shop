@@ -36,7 +36,7 @@ export default function LoginUser() {
         cookies.set("username", result.data.user.name, { maxAge: 7200 });
         cookies.set("user_id", result.data.user.id, { maxAge: 7200 });
 
-        // window.location.pathname = "/home";
+        window.location.pathname = "/home";
         Setloading(false);
       }
     } catch (error) {

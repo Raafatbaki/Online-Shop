@@ -65,28 +65,5 @@ class ProfileController extends Controller
         });
     }
 
-    /*public function getProfileForCheckout(){
-
-        if (Auth::guard("user")->check()) {
-
-            $user= Auth::guard("user")->user();
-            return Response::json([
-                "profile" => User::findOrFail($user->id)->profile()->get(),
-                'user'=>User::findOrFail($user->id)]);
-        }
-        return Response::json(["error" => "Unauthorized"], 401);
-    }*/
-
-    /*private function convertDateToISO($date) {
-        $dateTime = DateTime::createFromFormat('m-d-Y', $date);
-        if ($dateTime) {
-            return $dateTime->format('Y-m-d');  // تنسيق التاريخ إلى الصيغة المطلوبة
-        } else {
-            return false;  // أو رمي خطأ إذا كان التاريخ غير صالح
-        }
-    }*/
-
-
-
 
 }

@@ -12,70 +12,70 @@ import Cookie from "cookie-universal";
 
 export default function Topbar() {
   
-  // const [userExict, setUser] = useState();
-  // const [id, setId] = useState();
+  const [userExict, setUser] = useState();
+  const [id, setId] = useState();
   const menu = useContext(Menu);
   const setIsopen = menu.setIsopen;
-  // const cookie = Cookie();
-  // const token = cookie.get("admin-token");
+  const cookie = Cookie();
+  const token = cookie.get("admin-token");
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       var response = await axios.post(
-  //         `${baseUrl}/${AdminAuth}`,
-  //         JSON.stringify(token),
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-  //       if (response.status === 200) {
-  //         console.log(response.data.admin.name);
-  //         setUser(response.data.admin.name);
-  //         setId(response.data.admin.id);
-  //       } else if (response.status === 401) {
-  //         navigate("/loginAdmin", { replace: true });
-  //       } else {
-  //         navigate("/dashboard", { replace: true });
-  //       }
-  //     } catch (error) {
-  //       navigate("/loginAdmin", { replace: true });
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        var response = await axios.post(
+          `${baseUrl}/${AdminAuth}`,
+          JSON.stringify(token),
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.status === 200) {
+          console.log(response.data.admin.name);
+          setUser(response.data.admin.name);
+          setId(response.data.admin.id);
+        } else if (response.status === 401) {
+          navigate("/loginAdmin", { replace: true });
+        } else {
+          navigate("/dashboard", { replace: true });
+        }
+      } catch (error) {
+        navigate("/loginAdmin", { replace: true });
+      }
+    };
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, []);
 
-  // async function handelLogout(id) {
-  //   try {
-  //     var response = await axios.post(
-  //       `${baseUrl}/${LOGOUTADMIN}`,
-  //       JSON.stringify(token),
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     if (response.status === 200) {
-  //       cookie.remove("admin-token");
-  //       setUser("");
-  //       setId("");
-  //       navigate("/loginAdmin", { replace: true });
-  //     } else if (response.status === 401) {
-  //       navigate("/dashboard", { replace: true });
-  //     } else {
-  //       navigate("/dashboard", { replace: true });
-  //     }
-  //   } catch (error) {
-  //     navigate("/loginAdmin", { replace: true });
-  //   }
-  // }
+  async function handelLogout(id) {
+    try {
+      var response = await axios.post(
+        `${baseUrl}/${LOGOUTADMIN}`,
+        JSON.stringify(token),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 200) {
+        cookie.remove("admin-token");
+        setUser("");
+        setId("");
+        navigate("/loginAdmin", { replace: true });
+      } else if (response.status === 401) {
+        navigate("/dashboard", { replace: true });
+      } else {
+        navigate("/dashboard", { replace: true });
+      }
+    } catch (error) {
+      navigate("/loginAdmin", { replace: true });
+    }
+  }
 
   return (
     <div className="top-bar ">
@@ -90,17 +90,16 @@ export default function Topbar() {
         </div>
 
         <div>
-          {/* <Dropdown>
+          <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">
               {userExict ? userExict : ""}
             </Dropdown.Toggle>
-
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => handelLogout(`${id}`)}>
                 Log-out
               </Dropdown.Item>
             </Dropdown.Menu>
-          </Dropdown> */}
+          </Dropdown>
         </div>
       </div>
     </div>

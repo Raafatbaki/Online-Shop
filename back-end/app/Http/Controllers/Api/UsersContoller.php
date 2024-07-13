@@ -35,37 +35,6 @@ class UsersContoller extends Controller
         ]);
     }
 
-  /*  public function AuthAuser(){
-        return Response::json([
-            "user"=>Auth::guard('user')->user()
-        ]);
-    }*/
-    /*public function getUser($id)
-    {
-
-        if(Auth::guard("admin")){
-            return User::findOrFail($id);
-        }elseif (Auth::guard("user")->user()->id==$id){
-            return User::findOrFail($id);
-        }
-        return Response::json([
-            'message'=>"Erorr"
-        ]);
-    }*/
-
-    // Edit User
-    /*public function editUser(Request $request, $id)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email'
-        ]);
-        $user = User::findOrFail($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->save();
-    }*/
-
     // Delete User
     public function destroy($id)
     {

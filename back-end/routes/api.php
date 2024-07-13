@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\Dashboard\CategoriesController;
+use App\Http\Controllers\Api\Dashboard\ProductImageController;
+use App\Http\Controllers\Api\Dashboard\ProductsController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\UsersContoller;
 use App\Http\Controllers\Auth\AuthController;
@@ -34,6 +37,32 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/userProfile/{id}', [ProfileController::class, 'getProfileById']);
     Route::put('/profile/edit/{id}',[ProfileController::class,"updateProfileById"]);
 
+});
+
+//protected linke for Categories
+Route::middleware(['auth:admin','forceJson'])->group(function () {
+
+    Route::get('/admin/categories',[CategoriesController::class,'index']);
+    Route::get('/admin/category/{id}',[CategoriesController::class,'getcategoryById']);
+    Route::post('/admin/categoryEdit/{id}',[CategoriesController::class,'updateCategoryById']);
+    Route::Delete('/admin/categories/delete/{id}',[CategoriesController::class,'destroy']);
+    Route::post('/admin/addcategory',[CategoriesController::class,'store']);
+
+
+});
+
+//protected linke for products
+Route::middleware('auth:admin')->group(function () {
+
+    Route::get('/admin/products',[ProductsController::class,'index']);
+    Route::post('/admin/products/add',[ProductsController::class,'store']);
+    Route::get('/admin/product/{id}',[ProductsController::class,'show']);
+    Route::post('/admin/products/edit/{id}',[ProductsController::class,'edit']);
+    Route::delete('/admin/products/delete/{id}',[ProductsController::class,'destroy']);
+});
+Route::middleware('auth:admin')->controller(ProductImageController::class)->group(function () {
+    Route::post('/product-img/add', 'store');
+    Route::delete('admin/product-foto-delete/{id}', 'destroy');
 });
 
 // Protected Routes for User
